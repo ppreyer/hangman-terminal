@@ -1,4 +1,5 @@
 var inquirer = require("inquirer");
+var wordObject = require("./word.js");
 
 inquirer.prompt([
 
@@ -21,4 +22,5 @@ inquirer.prompt([
   ]).then(function (answers) {
     console.log(answers.userIntro);
     console.log(answers.userInstructions);
+    wordObject.word.selectWord();
 });
