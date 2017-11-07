@@ -1,20 +1,11 @@
-function Word(wordObj) {
-  this.wordChoices = wordObj.wordChoices;
-  this.selectedWord = wordObj.selectedWord;
-  this.hello = function() {
-    console.log('hello');
-  }
+var Word = function (wordArray) {
+  this.wordChoices = wordArray;
   this.selectWord = function() {
-    console.log(this.wordChoices[Math.floor(Math.random() * this.wordChoices.length)]);
+    return this.wordChoices[Math.floor(Math.random() * this.wordChoices.length)];
   }
 }
 
+module.exports = Word;
 
-var boardGames = new Word({
-  wordChoices: ["sorry", "monopoly", "shoots and ladders", "risk", "settlers of catan", "stratego", "life", "chess", "scrabble"],
-  selectedWord: ''
-});
-
-boardGames.selectWord();
-
-module.exports = test;
+// Export constructor to another file
+// Use methods within constructor in another constructor

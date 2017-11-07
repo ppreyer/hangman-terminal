@@ -1,5 +1,5 @@
-function Letter(letterObj) {
-  this.word = letterObj.word;
+var Letter = function (randomWord) {
+  this.word = randomWord,
   this.displayWordLength = function() {
     if(this.word.length > 0) {
       var blankWordArr = [];
@@ -7,30 +7,14 @@ function Letter(letterObj) {
         var letter = this.word[i];
         blankWordArr.push("_");
       }
-      console.log(blankWordArr.join(" "));
+      var blankWord = blankWordArr.join(" ");
+      console.log(blankWord);
     }
   }
 }
 
+module.exports = Letter;
 
-var letter = new Letter ({
-  word : 'hello',
-})
+// var letter = new Letter(['life', 'is', 'hard']);
+// letter.displayWordLength();
 
-letter.displayWordLength();
-
-
-
-// function Word(wordObj) {
-//   this.wordChoices = wordObj.wordChoices;
-//   this.selectedWord = wordObj.selectedWord;
-//   this.selectWord = function() {
-//     console.log(this.wordChoices[Math.floor(Math.random() * this.wordChoices.length)]);
-//   }
-// }
-
-
-// var boardGames = new Word({
-//   wordChoices: ["sorry", "monopoly", "shoots and ladders", "risk", "settlers of catan", "stratego", "life", "chess", "scrabble"],
-//   selectedWord: ''
-// });
