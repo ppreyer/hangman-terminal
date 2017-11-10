@@ -8,7 +8,8 @@ var Letter = function (randomWord) {
         blankWordArr.push("_");
       }
       var blankWord = blankWordArr.join(" ");
-      console.log(blankWord);
+      // console.log(blankWord);
+      return blankWord;
     }
   }
 }

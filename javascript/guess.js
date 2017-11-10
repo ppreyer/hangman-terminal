@@ -1,8 +1,13 @@
+var guessesLeft = require("./game.js");
+
 function checkUserGuess(randomWord, promptResult) {
   if(randomWord.indexOf(promptResult) > -1) {
-    console.log("YES");
+    console.log("CORRECT!");
+    return true;
   } else {
-      console.log("Not Correct");
+      console.log("Try again ;(");
+      guessesLeft--;
+      return false;
     }
 }
 
