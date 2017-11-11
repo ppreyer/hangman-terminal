@@ -1,26 +1,25 @@
+// Add node and file dependecies
 var inquirer = require("inquirer");
 var Word = require("./word.js");
 var Letter = require("./letter.js");
-// var checkUserGuess = require("./guess.js");
 
-// var checkLetterPosition = require("./check.js");
-
-// var checkGameStatus = require("./gameStatus.js");
-// var guessesLeft = require("./game.js");
-
+// Create new instance of Word object to store options for users to guess from
 var boardGames = new Word(
     ["sorry", "monopoly", "shootsandladders", "risk", "settlersofcatan",
         "stratego", "life", "chess", "scrabble"
     ]
 );
 
+// Create a randomly chosen word from above
 var randomWord = boardGames.selectWord().toUpperCase();
+// Create new instance of Letter object
 var letterChanger = new Letter(randomWord);
-// console.log(randomWord);
+// Display length of word chosen in "_" format
 var placeholderWord = letterChanger.displayWordLength();
-// console.log("placeholderWord", placeholderWord);
+// Declare empty variable to store the main word that updates with each guess
 var globalWord;
 
+// Game object to store important data
 var gameObject = {
     outputArr: [],
     turn: 0,
@@ -29,7 +28,9 @@ var gameObject = {
     guessInList: false,
 };
 
+// Main function to start game
 function welcomePrompt() {
+    // Call inquirer to display game rules
     inquirer.prompt([{
             type: "input",
             message: "Welcome to board game hangman! Your objective is to use the keyboard to guess letters in the title of a randomly chosen board game." + "\n" +
@@ -37,22 +38,26 @@ function welcomePrompt() {
                 "Press enter to begin. Good luck!",
             name: "start"
         }
-
+        // Callback function to display word to guess and invoke main game function guessLetter
     ]).then(function(answer) {
         console.log("Current board game:", placeholderWord);
         guessLetter();
     })
 }
 
+// Function to reset game after win/loss
 function resetGame() {
-
+    // Call inquirer and display reset game message
     inquirer.prompt([{
         type: "list",
         name: "reset",
         message: "Would you like to play again?",
         choices: ["yes", "no"]
+        // Callback function to determine user's input
     }]).then(function(answer) {
+        // if user wants to play...
         if (answer.reset === "yes") {
+            // Rest gameObject and call appropriate functions
             gameObject.outputArr = [];
             gameObject.turn = 0;
             gameObject.guessesLeft = 10;
@@ -67,6 +72,7 @@ function resetGame() {
     })
 };
 
+// function to check if user has already guessed letter. If not add to an array.
 function addLetterToUserGuessArray(promptResult) {
     if (gameObject.guessList.indexOf(promptResult) > -1) {
         console.log("user guesses", gameObject.guessList);
@@ -77,6 +83,7 @@ function addLetterToUserGuessArray(promptResult) {
     }
 }
 
+// Function checks if user's guess is in the array, if yes then alert user. If not check move to next function.
 function checkIfUserGuessInList(prompResult) {
     if (gameObject.turn === 0) {
         gameObject.guessInList = false;
@@ -91,6 +98,12 @@ function checkIfUserGuessInList(prompResult) {
     }
 }
 
+// used to reset a gameobject property at the end of a turn
+function changeUserGuessListFalse() {
+    gameObject.guessInList = false;
+}
+
+// Display number of user guesses left if below 4
 function displayUserGuessesLeft() {
     if (gameObject.guessesLeft < 4 && gameObject.guessesLeft > 0) {
         console.log(`You have ${gameObject.guessesLeft} guesses remaining! Choose your next letter wisely...`);
@@ -99,10 +112,7 @@ function displayUserGuessesLeft() {
     }
 }
 
-function changeUserGuessListFalse() {
-    gameObject.guessInList = false;
-}
-
+// Alert user if their guess is correct or not
 function checkUserGuess(randomWord, promptResult) {
     if (randomWord.indexOf(promptResult) > -1) {
         console.log("CORRECT!");
@@ -114,6 +124,7 @@ function checkUserGuess(randomWord, promptResult) {
     }
 }
 
+// Create array with user's guess + "_" for one single turn to compare to the global word
 function checkLetterPosition(randomWord, promptResult) {
     for (var i = 0; i < randomWord.length; i++) {
         var letter = randomWord[i];
@@ -128,19 +139,19 @@ function checkLetterPosition(randomWord, promptResult) {
     return outputArr;
 }
 
+// Compare user's guess to globalword to add user's correctly guessed letter
 function compareArrays(outputArr, globalWord) {
     var placeholderArr = globalWord.split(" ");
-    // console.log("placeholder array", placeholderArr);
     for (var i = 0; i < placeholderArr.length; i++) {
         if (gameObject.outputArr[i] !== "_") {
             placeholderArr[i] = gameObject.outputArr[i];
         } else {}
     }
-    // console.log("place", placeholderArr);
     globalWord = placeholderArr.join(" ");
     return globalWord;
 }
 
+// Check to see which turn it is in the game
 var checkTurn = function() {
     if (gameObject.turn === 0) {
         globalWord = placeholderWord;
@@ -155,7 +166,8 @@ var checkTurn = function() {
         return;
     }
 }
-// checkGameStatus(outputArr, guessesLeft);
+
+// Main game function which is invoked to prompt a user to guess a letter
 var guessLetter = function() {
     // console.log("Current Board Game:", randomWord);
     checkTurn();
@@ -197,4 +209,5 @@ var guessLetter = function() {
     }
 }
 
+// Starts game
 welcomePrompt();
