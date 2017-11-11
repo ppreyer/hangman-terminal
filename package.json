@@ -1,0 +1,28 @@
+{
+  "name": "hangman-game",
+  "version": "1.0.0",
+  "description": "A terminal hangman game built with node.js and javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ppreyer/hangman-terminal.git"
+  },
+  "keywords": [
+    "hangman",
+    "terminal",
+    "node.js",
+    "javascript"
+  ],
+  "author": "Parker Preyer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ppreyer/hangman-terminal/issues"
+  },
+  "homepage": "https://github.com/ppreyer/hangman-terminal#readme",
+  "dependencies": {
+    "inquirer": "^3.3.0"
+  }
+}
